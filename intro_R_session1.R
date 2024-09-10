@@ -1,4 +1,4 @@
-## 00. Intro
+# ## 00. Intro ------------------------------------------------------------
 
 hi <- "we R awesome"
 
@@ -6,16 +6,37 @@ four <- 2+2
 
 plot(four)
 
-## 01. Data types 
+
+
+# set the current working directory to where the data files live 
+setwd("/Users/shireenparimoo/Documents/Teaching/R Workshop - September 2024/data/")
+
+# check the current working directory 
+getwd()
+
+
+# check the files available in the current working directory
+dir()
+list.files()
+
+#
+# ## 01. Data types  ------------------------------------------------------
 
 my_number <- 123
+class(my_number)
+
 my_character <- "Letters"
+class(my_character)
+
 my_integer <- 1L
+class(my_integer)
+
 my_boolean <- TRUE
+class(my_boolean)
 
 my_vector <- c(1, 2, 3, 4, 5, 6)
 class(my_vector)
-d
+
 # what if you mix in characters and numbers in a vector?
 my_new_vector <- c(1, 2, 3, "4", "5", 6)
 class(my_new_vector)
@@ -71,13 +92,12 @@ my_df <- data.frame(numbers = c(1, 2),
 my_df
 
 
-## 02. Operations
+#
+# ## 02. Operations -------------------------------------------------------
 
-# arithmetic operations  
-n_numbers <- length(my_vector)
-mean_numbers <- mean(my_vector)
-sd_numbers <- sd(my_vector)
-se_numbers <- sd_numbers / sqrt(n_numbers)
+# calculate the mean
+(2+3+4)/3
+mean(c(2,3,4))
 
 # relational operations
 5 > 10
@@ -90,8 +110,18 @@ TRUE & TRUE
 (5 < 1) | (5 < 10) # is one of them true?
 (5 < 1) | (5 > 10) # is one of them true?
 
+# you can also use variable assignment to perform operations
+# we will use my_vector to calculate the standard error 
+my_vector 
 
-## 03. Importing data 
+# arithmetic operations  
+n_numbers <- length(my_vector)
+mean_numbers <- mean(my_vector)
+sd_numbers <- sd(my_vector)
+se_numbers <- sd_numbers / sqrt(n_numbers)
+
+#
+# ## 03. Importing data  --------------------------------------------------
 
 ## import a text file
 my_text_file <- read.delim("data/framingham.txt", header = TRUE)
