@@ -124,7 +124,7 @@ se_numbers <- sd_numbers / sqrt(n_numbers)
 # ## 03. Importing data  --------------------------------------------------
 
 ## import a text file
-my_text_file <- read.delim("data/framingham.txt", header = TRUE)
+my_text_file <- read.delim("framingham.txt", header = TRUE)
 
 # what kind of object was created?
 class(my_text_file)
@@ -135,7 +135,7 @@ str(my_text_file)
 
 
 ## import a CSV file
-my_csv_file <- read.csv("data/framingham.csv", header = TRUE, sep = ",")
+my_csv_file <- read.csv("framingham.csv", header = TRUE, sep = ",")
 
 # what kind of object was created?
 class(my_csv_file)
@@ -149,6 +149,12 @@ View(my_csv_file)
 
 # let's take a look at the structure again
 str(my_csv_file)
+head(my_csv_file, n = 10) #  first 10 rows of the data frame
+tail(my_csv_file, n = 10) # last 10 rows of the data frame
+nrow(my_csv_file) # number of rows in the data frame
+ncol(my_csv_file) # number of columns in the data frame
+names(my_csv_file) # the names of the columns in the data frame
+summary(my_csv_file) # outputs some summary statistics for each column in the data frame
 
 
 # do any of the columns need to be updated? 
