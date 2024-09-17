@@ -5,7 +5,7 @@ setwd("/Users/shireenparimoo/Documents/Teaching/R Workshop - September 2024/data
 
 ## 00. Load libraries ----------------------------------------------------
 
-# install.packages("tidyverse")
+# install.packages("tidyverse", "corrplot")
 library(tidyverse) # we will use this library, which comes with its own syntax
 library(jtools) # `theme_apa` for plotting
 library(corrplot) # visualize correlations
@@ -57,14 +57,14 @@ prepped_df_base <- as.data.frame(raw_df)
 # our factor variables: "male", "education", "currentSmoker", "BPMeds", "prevalentStroke", "prevalentHyp", "diabetes", "TenYearCHD"
 # our numeric variables: "age", "cigsPerDay", "totChol", "sysBP", "diaBP", "heartRate", "glucose"
 prepped_df_base <- mutate_at(prepped_df_base, 
-                             c(), 
+                             c("male", "education", "currentSmoker", "BPMeds", "prevalentStroke", "prevalentHyp", "diabetes", "TenYearCHD"), 
                              as.factor)
 prepped_df_base <- mutate_at(prepped_df_base, 
-                             c(), 
+                             c("age", "cigsPerDay", "totChol", "sysBP", "diaBP", "heartRate", "glucose"), 
                              as.numeric)
 
 # create a new column for sex
-prepped_df_base$sex <- ifelse() # `ifelse` is useful when you have a binary set of values as output 
+prepped_df_base$sex <- ifelse(prepped_df_base$male == 1, "M", "F") # `ifelse` is useful when you have a binary set of values as output 
 
 # assign descriptive values to the education variable  
 # `case_when` is useful/cleaner to use when there are multiple possible output values
@@ -90,7 +90,7 @@ str(prepped_df_base) # everything looks good now
 
 # there are two ways to do this in base R: using `filter()` or using `subset()`
 # 1. using `filter()` -- can be used to select rows containing specific values
-prepped_df_base_chd <- filter(df, df$variable == value)
+prepped_df_base_chd <- filter(prepped_df_base, prepped_df_base$TenYearCHD == 1)
 prepped_df_base_no_chd <- filter(df, df$variable == value)
 
 # 2. using `subset()` -- can be used to select rows containing specific values AND specific columns 
@@ -120,9 +120,9 @@ prepped_df_tidy <- raw_df %>%  # this is a pipe; it allows you to perform a sequ
   # now let's first change some of the variables to factors and numerics
   # the mutate_at function will take a vector of the column names you want to change to factor 
   # and apply the `factor` function to those variables in the `prepped_df_tidy` dataframe
-  mutate_at(., c("male", "education", "currentSmoker", "BPMeds", "prevalentStroke", "prevalentHyp", "diabetes", "TenYearCHD"), 
+  mutate_at(c("male", "education", "currentSmoker", "BPMeds", "prevalentStroke", "prevalentHyp", "diabetes", "TenYearCHD"), 
             as.factor) %>% 
-  mutate_at(., c("age", "cigsPerDay", "totChol", "sysBP", "diaBP", "heartRate", "glucose"),
+  mutate_at(c("age", "cigsPerDay", "totChol", "sysBP", "diaBP", "heartRate", "glucose"),
             as.numeric) %>% 
   # let's also change the values in the male and education columns to make them more descriptive
   # and convert them to factors all at once
@@ -136,8 +136,8 @@ prepped_df_tidy <- raw_df %>%  # this is a pipe; it allows you to perform a sequ
 all.equal(prepped_df_base, prepped_df_tidy) # TRUE
 
 # create new data frames for those with and without CHD in 10 years
-prepped_df_chd <- df %>% 
-  filter(., variable == value)
+prepped_df_chd <- prepped_df_tidy %>% 
+  filter(TenYearCHD == 1)
 
 prepped_df_no_chd <- df %>% 
   filter(., variable == value)
@@ -159,3 +159,7 @@ all.equal(prepped_df_no_chd, prepped_df_base_no_chd) # TRUE
 prepped_df <- as.data.frame(prepped_df_tidy)
 
 #
+
+
+
+
