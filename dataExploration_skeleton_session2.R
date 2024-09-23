@@ -91,11 +91,7 @@ str(prepped_df_base) # everything looks good now
 # there are two ways to do this in base R: using `filter()` or using `subset()`
 # 1. using `filter()` -- can be used to select rows containing specific values
 prepped_df_base_chd <- filter(prepped_df_base, prepped_df_base$TenYearCHD == 1)
-prepped_df_base_no_chd <- filter(df, df$variable == value)
-
-# 2. using `subset()` -- can be used to select rows containing specific values AND specific columns 
-prepped_df_base_chd2 <- subset(df, variable == value)
-prepped_df_base_no_chd2 <- subset(df, variable == value)
+prepped_df_base_no_chd <- filter(prepped_df_base, prepped_df_base$TenYearCHD == 0)
 
 # check that the two data frames are the same
 all.equal(prepped_df_base_chd, prepped_df_base_chd2, check.attributes = FALSE) # row numbers are different between the data frames 
@@ -140,7 +136,7 @@ prepped_df_chd <- prepped_df_tidy %>%
   filter(TenYearCHD == 1)
 
 prepped_df_no_chd <- df %>% 
-  filter(., variable == value)
+  filter(., TenYearCHD == 0)
 
 # check that the prepped_df_chd and prepped_df_no_chd produced using tidyr are the 
 # same as those produced using base R
