@@ -41,7 +41,7 @@ plot(x = prepped_df$, y = prepped_df$) # basic boxplot
 #   additional layers 
 
 ## age histogram
-ggplot(prepped_df, aes(x = )) + # use `+` to add more layers to your plot 
+ggplot(prepped_df, aes(x = x)) + # use `+` to add more layers to your plot 
   # we want the bars to be lightblue and the outline to be black
   geom_histogram(binwidth = 1, fill = "lightblue", color = "black") +  
   # `binwidth` will change the width of each bar (e.g., 1 = bars will go up in 1 year increments)
@@ -73,7 +73,7 @@ ggplot(prepped_df, aes(x = heartRate)) +
 # C) Bar charts -----------------------------------------------------------
 
 # if you want to see the mean age differences between males and females, ggplot can help with that too 
-ggplot(prepped_df, aes(x = , y = , fill = )) +
+ggplot(prepped_df, aes(x = x, y = y, fill = x)) +
   # `fill = variable` tells ggplot which variables should be colored differently 
   # use `geom_bar()` to create a barplot, since the x-variable is categorical
   geom_bar(stat = "summary", show.legend = F, color = "black") +
@@ -91,7 +91,7 @@ ggplot(prepped_df, aes(x = , y = , fill = )) +
 
 # let's look at the relationship between numeric variables
 # is age related to blood pressure?
-ggplot(prepped_df, aes(x = , y = )) +
+ggplot(prepped_df, aes(x = x, y = y)) +
   # use `geom_point()` to create a scatterplot
   # `alpha = 0.5` sets transparency to 50%
   # `position = "jitter"` makes it so that the points are scattered a little around their true value
