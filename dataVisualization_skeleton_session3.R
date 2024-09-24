@@ -2,6 +2,12 @@
 
 setwd("/Users/shireenparimoo/Documents/Teaching/R Workshop - September 2024/data/")
 
+## 00. Load libraries ----------------------------------------------------
+
+# install.packages("tidyverse", "corrplot")
+library(tidyverse) # we will use this library, which comes with its own syntax
+
+#
 
 ############################### VISUALIZATIONS ####################
 
@@ -11,21 +17,21 @@ setwd("/Users/shireenparimoo/Documents/Teaching/R Workshop - September 2024/data
 
 # let's look at the distribution of the numeric variables in the sample
 # use `hist(df$variable)`; it takes in a numeric input variable and produces a basic histogram
-hist(prepped_df$)  # age 
-hist(prepped_df$)  # cigarettes smoked per day
+hist(prepped_df$age)  # age 
+hist(prepped_df$cigsPerDay)  # cigarettes smoked per day
 hist(prepped_df$)  # and so on
 
 # what about our factors, like sex?
-hist(prepped_df$) # this would throw an error because you can't plot the distribution of categorical variables
+hist(prepped_df$sex) # this would throw an error because you can't plot the distribution of categorical variables
 
 # use the `plot()` function to plot a basic bar chart displaying frequencies/counts
 # the syntax is similar to before: `plot(df$variable)`
-plot(prepped_df$)  # sex
-plot(prepped_df$)  # education
+plot(prepped_df$sex)  # sex
+plot(prepped_df$education)  # education
 
 # `plot()` isn't great for visualizing continuous variables on their own
 # try plotting the cigarettes smoked per day
-plot(prepped_df$) # looks like a mess
+plot(prepped_df$cigsPerDay) # looks like a mess
 
 # but you can also look at two variables at once using `plot()`
 # let's see the number of cigarettes smoked by males vs females
@@ -41,7 +47,7 @@ plot(x = prepped_df$, y = prepped_df$) # basic boxplot
 #   additional layers 
 
 ## age histogram
-ggplot(prepped_df, aes(x = x)) + # use `+` to add more layers to your plot 
+ggplot(prepped_df, aes(x = age)) + # use `+` to add more layers to your plot 
   # we want the bars to be lightblue and the outline to be black
   geom_histogram(binwidth = 1, fill = "lightblue", color = "black") +  
   # `binwidth` will change the width of each bar (e.g., 1 = bars will go up in 1 year increments)
@@ -52,11 +58,11 @@ ggplot(prepped_df, aes(x = x)) + # use `+` to add more layers to your plot
   # set the font sizes to 20
   theme_apa(x.font.size = 20, y.font.size = 20) + 
   # you can change the axis labels as well 
-  labs(x = "Heart Rate",
+  labs(x = "Age",
        y = "Count") # alternative syntax for changing axis labels: xlab() + ylab()
 
 # you can plot a histogram and overlay it with a density plot as well, with some minor tweaks to the code above
-ggplot(prepped_df, aes(x = heartRate)) +
+ggplot(prepped_df, aes(x = cigsPerDay)) +
   # change the y-axis to density instead of counts
   geom_histogram(aes(y = ..density..), binwidth = 1, fill = "lightblue", color = "black") +
   # by default, `geom_density()` will just plot a density curve
@@ -73,7 +79,7 @@ ggplot(prepped_df, aes(x = heartRate)) +
 # C) Bar charts -----------------------------------------------------------
 
 # if you want to see the mean age differences between males and females, ggplot can help with that too 
-ggplot(prepped_df, aes(x = x, y = y, fill = x)) +
+ggplot(prepped_df, aes(x = sex, y = age, fill = sex)) +
   # `fill = variable` tells ggplot which variables should be colored differently 
   # use `geom_bar()` to create a barplot, since the x-variable is categorical
   geom_bar(stat = "summary", show.legend = F, color = "black") +
@@ -81,7 +87,7 @@ ggplot(prepped_df, aes(x = x, y = y, fill = x)) +
   # `show.legend` can be set to TRUE/T or FALSE/F 
   theme_apa(x.font.size = 20, y.font.size = 20) +
   labs(x = "Sex",
-       y = "Mean Cigarettes Smoked per Day") 
+       y = "Age") 
 
 ## CHALLENGE: create a barplot of sex differences in number of cigarettes smoked per day 
 
@@ -91,7 +97,7 @@ ggplot(prepped_df, aes(x = x, y = y, fill = x)) +
 
 # let's look at the relationship between numeric variables
 # is age related to blood pressure?
-ggplot(prepped_df, aes(x = x, y = y)) +
+ggplot(prepped_df, aes(x = age, y = sysBP)) +
   # use `geom_point()` to create a scatterplot
   # `alpha = 0.5` sets transparency to 50%
   # `position = "jitter"` makes it so that the points are scattered a little around their true value

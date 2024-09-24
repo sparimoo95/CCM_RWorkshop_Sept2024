@@ -2,6 +2,15 @@
 
 setwd("/Users/shireenparimoo/Documents/Teaching/R Workshop - September 2024/data/")
 
+## 00. Load libraries ----------------------------------------------------
+
+# install.packages("tidyverse", "corrplot")
+library(tidyverse) # we will use this library, which comes with its own syntax
+library(jtools) # `theme_apa` for plotting
+library(stats)
+
+#
+
 ############################### T-TESTS ############################### 
 
 
@@ -9,17 +18,17 @@ setwd("/Users/shireenparimoo/Documents/Teaching/R Workshop - September 2024/data
 # A) One-way t-tests ------------------------------------------------------
 
 # Are the number of cigarettes smoked by our sample different from 0? 
-t.test(df$y, mu = 0)
+t.test(prepped_df$cigsPerDay, mu = 0)
 
 # what about 10?
-t.test(df$y, mu = 10)
+t.test(prepped_df$cigsPerDay, mu = 10)
 
 #
 
 # B) Two-way t-tests ------------------------------------------------------
 
 # Do people with diabetes have higher blood glucose levels than those without diabetes?
-t.test(y ~ x, data = df)
+t.test(glucose ~ diabetes, data = prepped_df)
 
 #
 
@@ -32,6 +41,7 @@ ggplot(prepped_df, aes(x = diabetes, y = glucose, fill = diabetes)) +
   # changing `color` will change the color of the bar outline
   theme_apa(x.font.size = 22, y.font.size = 18) +
   labs(x = " ", y = "Blood Glucose Levels") +
+  geom_point(alpha = 0.5, color = "black", position = "jitter", show.legend = F) +
   # add error bars 
   geom_errorbar(stat = "summary", width = 0.2) + # setting `stat = "summary"` will plot the standard error
   # either (1) manually change the colors

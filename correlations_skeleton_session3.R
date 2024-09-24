@@ -2,6 +2,15 @@
 
 setwd("/Users/shireenparimoo/Documents/Teaching/R Workshop - September 2024/data/")
 
+## 00. Load libraries ----------------------------------------------------
+
+# install.packages("tidyverse", "corrplot")
+library(tidyverse) # we will use this library, which comes with its own syntax
+library(jtools) # `theme_apa` for plotting
+library(stats)
+
+#
+
 ############################### CORRELATIONS ###########################
 
 
@@ -9,14 +18,14 @@ setwd("/Users/shireenparimoo/Documents/Teaching/R Workshop - September 2024/data
 # A) Calculate correlations --------------------------------------
 
 # just get the r to see whether age and sysBP are correlated
-cor(df$x, df$y, use = "na.or.complete")
+cor(prepped_df$age, prepped_df$sysBP, use = "na.or.complete")
 
 # perform a correlation test to test for statistical significance
-cor.test(df$x, df$y, use = "na.or.complete")
+cor.test(prepped_df$age, prepped_df$sysBP, use = "na.or.complete")
 
 # formula syntax: (we will re-visit this for other statistical tests)
 cor.test(~ df$x + df$y, use = "na.or.complete")
-cor.test(~ x + y, data = df, use = "na.or.complete")
+cor.test(~ age + sysBP, data = prepped_df, use = "na.or.complete")
 
 # by default, `cor.test()` performs a pearson correlation
 # you can also specify the type of correlation using the `method` argument
